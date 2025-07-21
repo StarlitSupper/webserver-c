@@ -1,0 +1,65 @@
+/* 清除所有元素的内外边距和默认边框 */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box; /* 统一盒模型为 border-box，避免宽度计算问题 */
+}
+
+/* 清除列表默认样式（圆点、数字等） */
+ul, ol, li {
+    list-style: none;
+}
+
+/* 清除超链接默认样式 */
+a {
+    text-decoration: none; /* 去掉下划线 */
+    color: inherit; /* 继承父元素颜色，避免默认蓝色 */
+}
+
+/* 清除表格默认边框和间距 */
+table {
+    border-collapse: collapse; /* 合并边框 */
+    border-spacing: 0;
+}
+
+/* 清除表单元素默认样式 */
+input, button, textarea, select {
+    font-family: inherit; /* 继承父元素字体 */
+    font-size: inherit;
+    line-height: inherit;
+    background: none; /* 清除默认背景 */
+    outline: none; /* 清除聚焦时的默认轮廓（可根据需求保留） */
+}
+
+/* 清除按钮默认样式 */
+button {
+    cursor: pointer; /* 鼠标悬停时显示手型 */
+}
+
+/* 清除图片默认边框和对齐问题 */
+img {
+    display: block; /* 避免图片底部默认留白 */
+    max-width: 100%; /* 确保图片自适应容器 */
+    height: auto; /* 保持图片比例 */
+}
+
+/* 清除块级元素默认换行问题（如 p、h 标签） */
+p, h1, h2, h3, h4, h5, h6 {
+    font-weight: normal; /* 清除标题默认加粗 */
+}
+
+/* 清除浮动带来的父元素高度塌陷问题 */
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* 统一 body 基础样式 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5; /* 统一行高，提升可读性 */
+    color: #333; /* 默认文本颜色 */
+    background-color: #fff; /* 默认背景色 */
+}
