@@ -1,0 +1,60 @@
+{
+  "server": {
+    "address": "127.0.0.1",
+    "port": 9001
+  },
+  "logging": {
+    "level": "INFO",
+    "file_path": "../logs/localhost_access_log.txt"
+  },
+  "routes": [
+    {
+      "path": "/",
+      "method": "GET",
+      "handler": "serve_static",
+      "params": {
+        "file_path": "../blog/index.html"
+      }
+    },
+    {
+      "path": "/search.html",
+      "method": "GET",
+      "handler": "serve_static",
+      "params": {
+        "file_path": "../blog/pages/search.html"
+      }
+    },
+    {
+      "path": "/pages/blog1.html",
+      "method": "GET",
+      "handler": "serve_static",
+      "params": {
+        "file_path": "../blog/pages/blog1.html"
+      }
+    },
+    {
+      "path": "/",
+      "method": "POST",
+      "handler": "handle_search",
+      "params": {
+        "data_dir": "../data/"
+      }
+    },
+    {
+      "path": "/css/styles.css",
+      "method": "GET",
+      "handler": "serve_static",
+      "params": {
+        "file_path": "../blog/css/styles.css"
+      }
+    },
+    {
+      "path": "/img/*",
+      "method": "GET",
+      "handler": "serve_static",
+      "params": {
+        "base_dir": "../blog/img/"
+      }
+    }
+  ]
+}

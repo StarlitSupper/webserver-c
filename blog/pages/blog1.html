@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深入解析IP协议：组成、地址管理与路由选择</title>
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <header>
+        <img src="../img/stone.png" alt="srk" width="50">
+        <span>srk's blog</span>
+        <nav>
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="pages/search.html">搜索</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="article-container">
+            <h1>深入解析IP协议：组成、地址管理与路由选择</h1>
+            <p class="time">发布时间：2025-07-22</p>
+            <hr>
+            <h2>一、协议组成</h2>
+            <p>IP协议（Internet Protocol）是互联网的核心网络层协议，其主要功能是<mark>为网络中的设备提供逻辑地址分配和数据包路由转发服务</mark>。该协议定义了IP地址的格式和分配方式，采用分组交换技术将数据封装为IP数据报进行传输，本文将简单介绍它的三个方面：<strong>协议组成</strong>、<strong>地址管理</strong>以及<strong>路由选择</strong>。</p>
+            <p>IP协议和TCP协议的复杂程度是差不多的~</p>
+            <p>四位版本号包括IPv4以及IPv6，这两个是大规模商用的版本。</p>
+            <p>四位首部长度，IP协议的报头也是<strong>变长</strong>的，因为也有选项的存在，单位是四字节。</p>
+            <p>8位服务类型决定了IP协议的工作方式，包括<mark>最小延时、最大吞吐量、最高可靠性、最小成本</mark>，这四者互相冲突，只能选择一个。</p>
+            <p>16位总长度=包头+载荷，最大是64KB。</p>
+            <hr>
+            <h2>二、地址管理</h2>
+            <p>IP地址在网络上是唯一的，可以用于确认你在网络上的位置。</p>
+            <p>IPv4是一个32位的数值，为了方便查看，一般使用点分十进制的方式表示，例如192.2.1.98。</p>
+            <p>IP地址分为两部分，前部分称之为“网络号”，后部分称为“主机号”。</p>
+            <p>网络号和主机号的划分是通过<strong>子网掩码</strong>进行区分，子网掩码是一个前部分为1，后部分为0的一个数值，不会出现01交错的情况，1的部分就表示那些bit位是网络号。</p>
+            <p> 在同一个局域网中的两个设备，网络号必须相同，主机号不能相同；</p>
+            <p>在不同的局域网中的两个设备，网络号必须不同，主机号可以相同。</p>
+        </div>
+
+        <aside>
+            <img src="../img/smile.gif" alt="笑">
+            <img src="../img/scream.gif" alt="尖叫">
+            <img src="../img/turning.gif" alt="旋转">
+        </aside>
+    </main>
+
+    <footer>
+        <small>Copyright © 2025 srk's blog</small><br>
+        <small>联系管理员：StarlitSupper@gmail.com</small>
+    </footer>
+</body>
+</html>

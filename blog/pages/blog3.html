@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RabbitMQ高级特性：延迟队列</title>
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <header>
+        <img src="../img/stone.png" alt="srk" width="50">
+        <span>srk's blog</span>
+        <nav>
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="pages/search.html">搜索</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="article-container">
+            <h1>RabbitMQ高级特性：延迟队列</h1>
+            <p class="time">发布时间：2025-07-22</p>
+            <hr>
+            <h2>一、延迟队列</h2>
+            <p>延迟队列(Delayed Queue)，即消息被发送以后, 并不想让消费者⽴刻拿到消息, ⽽是<strong>等待特定时间</strong>后，消费者才能拿到这个消息进⾏消费。</p>
+            <p>延迟队列的使⽤场景有很多, ⽐如：</p>
+            <ol>
+            	<li><strong>智能家居</strong>: ⽤⼾希望通过⼿机远程遥控家⾥的智能设备在指定的时间进⾏⼯作. 这时候就可以将⽤⼾指令发送到延迟队列, 当指令设定的时间到了再将指令推送到智能设备。</li>
+            	<li><strong>⽇常管理</strong>: 预定会议后，需要在会议开始前⼗五分钟提醒参会⼈参加会议。</li>
+            	<li>⽤⼾注册成功后, 7天后发送短信, <strong>提⾼⽤⼾活跃度</strong>等。</li>
+            </ol>
+            <p>RabbitMQ本⾝没有直接⽀持延迟队列的的功能, 但是可以通过前⾯所介绍的TTL+死信队列的⽅式组合模拟出延迟队列的功能。</p>
+            <p>假设⼀个应⽤中需要将每条消息都设置为10秒的延迟, ⽣产者通过 normal_exchange 这个交换器将发送的消息存储在 normal_queue 这个队列中. 消费者订阅的并⾮是 normal_queue 这个队列, ⽽
+是 dlx_queue 这个队列. 当消息从 normal_queue 这个队列中过期之后被存⼊ dlx_queue 这个
+队列中，消费者就恰巧消费到了延迟10秒的这条消息。</p>
+            <hr>
+            <h2>二、TTL+死信队列 实现延迟队列</h2>
+            <p>常量类：</p>
+            <code>
+            <pre>public class Constants {
+ 
+    //死信
+    public static final String NORMAL_QUEUE = "normal.queue";
+    public static final String NORMAL_EXCHANGE = "normal.exchange";
+ 
+    public static final String DL_QUEUE = "dl.queue";
+    public static final String DL_EXCHANGE= "dl.exchange";
+}</pre>
+            </code>
+            <p>声明队列和交换机，并绑定二者关系：</p>
+            <code>
+            <pre>import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import rabbitextensionsdemo.constant.Constants;
+ 
+@Configuration
+public class DLConfig {
+    //正常的交换机和队列
+    @Bean("normalQueue")
+    public Queue normalQueue(){
+        return QueueBuilder.durable(Constants.NORMAL_QUEUE)
+                .deadLetterExchange(Constants.DL_EXCHANGE)
+                .deadLetterRoutingKey("dlx")
+                .build();
+    }
+    @Bean("normalExchange")
+    public DirectExchange normalExchange(){
+        return ExchangeBuilder.directExchange(Constants.NORMAL_EXCHANGE).build();
+    }
+ 
+    @Bean("normalBinding")
+    public Binding normalBinding(@Qualifier("normalQueue") Queue queue, @Qualifier("normalExchange") Exchange exchange){
+        return BindingBuilder.bind(queue).to(exchange).with("normal").noargs();
+    }
+    //死信交换机和队列
+    @Bean("dlQueue")
+    public Queue dlQueue(){
+        return QueueBuilder.durable(Constants.DL_QUEUE).build();
+    }
+    @Bean("dlExchange")
+    public DirectExchange dlExchange(){
+        return ExchangeBuilder.directExchange(Constants.DL_EXCHANGE).build();
+    }
+ 
+    @Bean("dlBinding")
+    public Binding dlBinding(@Qualifier("dlQueue") Queue queue, @Qualifier("dlExchange") Exchange exchange){
+        return BindingBuilder.bind(queue).to(exchange).with("dlx").noargs();
+    }
+}</pre>
+            </code>
+        </div>
+
+        <aside>
+            <img src="../img/smile.gif" alt="笑">
+            <img src="../img/scream.gif" alt="尖叫">
+            <img src="../img/turning.gif" alt="旋转">
+        </aside>
+    </main>
+
+    <footer>
+        <small>Copyright © 2025 srk's blog</small><br>
+        <small>联系管理员：StarlitSupper@gmail.com</small>
+    </footer>
+</body>
+</html>

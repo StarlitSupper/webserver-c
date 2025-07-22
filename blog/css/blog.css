@@ -1,0 +1,246 @@
+/* ============== 基础样式 ============== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #333;
+    background-color: #f9fafb;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+a {
+    color: #165DFF;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+a:hover {
+    color: #0040C9;
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============== 页眉 ============== */
+header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    background-color: white;
+    border-bottom: 1px solid #e5e9f2;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+header span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    letter-spacing: 0.5px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #555;
+    font-size: 0.95rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+nav a:hover {
+    color: #2c3e50;
+    background-color: #f0f4f8;
+}
+
+/* ============== 主内容区 ============== */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 40px;
+}
+
+/* 文章区（左侧） */
+.article-container {
+    flex: 2;
+}
+
+/* 文章标题 */
+.article-container h1 {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin: 15px 0 30px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* 文章元信息（时间等） */
+.time {
+    color: #7b8794;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* 分隔线 */
+hr {
+    border: 0;
+    border-top: 1px solid #e5e9f2;
+    margin: 20px 0;
+}
+
+/* 文章内容区 */
+.article-container h2 {
+    font-size: 1.7rem;
+    color: #2c3e50;
+    margin: 40px 0 20px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.article-container h3 {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin: 30px 0 15px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.article-container p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* 强调内容 */
+.article-container strong {
+    font-weight: 600;
+    color: #1a202c;
+}
+
+/* 标记内容 */
+.article-container mark {
+    background-color: #fff3cd;
+    color: #333;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* 列表样式 */
+.article-container ul, .article-container ol {
+    margin: 15px 0 25px 30px;
+}
+
+.article-container li {
+    margin-bottom: 10px;
+}
+
+/* 代码块样式 */
+.article-container pre {
+    background-color: #f8fafc;
+    border: 1px solid #e5e9f2;
+    border-radius: 6px;
+    padding: 20px;
+    margin: 25px 0;
+    overflow-x: auto;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* 侧边栏（右侧） */
+aside {
+    flex: 1;
+    margin-top: 75px; /* 与文章标题对齐 */
+}
+
+aside img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+aside img:hover {
+    transform: translateY(-3px);
+}
+
+/* ============== 页脚 ============== */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 80px;
+    border-top: 1px solid #e5e9f2;
+    background-color: white;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+footer small {
+    line-height: 1.8;
+}
+
+/* ============== 响应式布局 ============== */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+    
+    aside {
+        margin-top: 30px;
+    }
+    
+    header {
+        padding: 0 20px;
+        height: auto;
+        flex-direction: column;
+        padding: 15px 0;
+    }
+    
+    nav ul {
+        margin-top: 10px;
+    }
+    
+    .article-container h1 {
+        font-size: 1.8rem;
+    }
+    
+    .article-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .article-container h3 {
+        font-size: 1.2rem;
+    }
+}

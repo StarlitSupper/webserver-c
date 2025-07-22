@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker资源占用深度解析与优化策略</title>
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <header>
+        <img src="../img/stone.png" alt="srk" width="50">
+        <span>srk's blog</span>
+        <nav>
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="pages/search.html">搜索</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="article-container">
+            <h1>Docker资源占用深度解析与优化策略</h1>
+            <p class="time">发布时间：2025-07-22</p>
+            <hr>
+            <p>Docker作为容器化技术的核心工具，其资源占用直接影响宿主机的性能和稳定性。以下从<strong>内存、CPU、磁盘 I/O、网络及镜像存储</strong>等维度展开分析，并结合监控工具与优化实践提供解决方案。</p>
+            <h2>一、内存占用分析</h2>
+            <h3>基础开销</h3>
+            <p><strong>Docker守护进程</strong>：通常占用50MB-100MB内存，具体取决于配置和并发操作（如镜像拉取、容器启动）。</p>
+            <p>容器运行时：</p>
+            <ul>
+            	<li><strong>轻量级镜像</strong>（如 Alpine）：基础内存5MB-10MB。</li>
+            	<li><strong>完整镜像</strong>（如 Ubuntu/Debian）：基础内存50MB-100MB。</li>
+            	<li><strong>Java 应用</strong>（如 openjdk:17-jdk）：基础镜像100MB-200MB+JVM内存（如堆内存256MB时总占用约300MB-400MB）。</li>
+            </ul>
+            <h3>优化策略</h3>
+            <p><strong>选择轻量级镜像</strong>：优先使用 Alpine或distroless镜像，减少基础内存占用。</p>
+            <p><strong>限制容器内存</strong>：通过 <code>-m</code> 或 <code>--memory</code> 参数设置上限（如 <code>docker run -m 512m my-app</code>）。</p>
+            <p><strong>JVM 调优</strong>：压缩指针（-XX:+UseCompressedOops）、限制 Metaspace（-XX:MaxMetaspaceSize=128m）。</p>
+            <p><strong>多阶段构建</strong>：仅保留运行所需文件，减少镜像层数。</p>
+            <hr>
+            <h2>二、CPU 使用率分析</h2>
+            <h3>资源分配与监控</h3>
+            <ul>
+            	<li><strong>共享机制</strong>：容器默认共享宿主机 CPU，高负载时可能导致争用。</li>
+            	<li><strong>监控工具</strong>：<code>docker stats</code>：实时查看容器CPU使用率。</li>
+            </ul>
+            <code>
+            <pre>import docker
+client = docker.from_env()
+for container in client.containers.list():
+    stats = container.stats(stream=False)
+    cpu_percent = stats['cpu_stats']['cpu_usage']['total_usage']
+    print(f"Container {container.id} CPU 使用率: {cpu_percent}%")
+</pre>
+            </code>
+            <h3>优化策略</h3>
+            <ul>
+            	<li><strong>限制CPU配额</strong>：通过 <code>--cpus</code> 参数（如 <code>--cpus="2"</code> 限制为 2 核）。</li>
+            	<li><strong>优先级调整</strong>：使用 <code>docker run --cpu-shares 512</code> 设置权重（默认1024）。</li>
+            	<li><strong>避免过度调度</strong>：通过Kubernetes或Docker Swarm实现负载均衡。</li>
+            </ul>
+        </div>
+
+        <aside>
+            <img src="../img/smile.gif" alt="笑">
+            <img src="../img/scream.gif" alt="尖叫">
+            <img src="../img/turning.gif" alt="旋转">
+        </aside>
+    </main>
+
+    <footer>
+        <small>Copyright © 2025 srk's blog</small><br>
+        <small>联系管理员：StarlitSupper@gmail.com</small>
+    </footer>
+</body>
+</html>

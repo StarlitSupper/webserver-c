@@ -1,0 +1,168 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 全局样式 */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    background-color: white;
+    border-bottom: 1px solid #e5e9f2;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+header span {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    letter-spacing: 0.5px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #555;
+    font-size: 0.95rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+nav a:hover {
+    color: #2c3e50;
+    background-color: #f0f4f8;
+}
+
+main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 40px; 
+}
+
+.article-container {
+    flex: 2;
+}
+
+.article-container h1 {
+    margin: 20px 0 30px;
+    color: #2d3436;
+    font-size: 1.8rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.article-container h1::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #0984e3;
+}
+
+article {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: transform 0.3s ease;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+article h2 {
+    color: #2d3436;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+}
+
+article p {
+    color: #636e72;
+    font-size: 0.95rem;
+}
+
+/* 侧边栏（右侧） */
+aside {
+    flex: 1; /* 占1/3宽度 */
+    margin-top: 68px; /* 与左侧标题对齐 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+aside img {
+    width: 100%; /* 适应侧边栏宽度 */
+    height: auto; /* 保持比例 */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 60px;
+    border-top: 1px solid #e0e0e0;
+    background-color: white;
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+footer small {
+    line-height: 1.8;
+}
+
+/* 响应式适配（小屏设备） */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column; /* 小屏垂直排列 */
+        gap: 20px;
+    }
+    
+    aside {
+        margin-top: 20px; /* 取消顶部间距 */
+        order: 2; /* 侧边栏在下方 */
+    }
+    
+    header {
+        padding: 0 20px;
+    }
+    
+    .article-container h1 {
+        font-size: 1.5rem;
+    }
+}

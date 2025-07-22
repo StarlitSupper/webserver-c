@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索 - srk's blog</title>
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/search.js"></script>
+    <style>
+        /* 搜索表单特有样式，保持与主页风格统一 */
+        .search-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .search-container h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .result-area {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <!-- 复用首页头部导航，保持一致性 -->
+    <header>
+        <img src="../img/stone.png" alt="srk" width="50">
+        <span>srk's blog</span>
+        <nav>
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="search.html" class="active">搜索</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="article-container"> 
+            <!-- 搜索表单区域 -->
+            <div class="search-container">
+                <h1>班级信息查询</h1>
+                <form method="post" action="/search">
+                    <div class="form-group">
+                        <label for="key1">查询班级（例如：2011）</label>
+                        <input type="text" id="key1" name="key1" placeholder="输入班级号（对应XXX.txt文件）" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="key2">关键字（例如：张三、男）</label>
+                        <input type="text" id="key2" name="key2" placeholder="输入姓名或性别" required>
+                    </div>
+                    <button type="submit" class="submit-btn">提交查询</button>
+                </form>
+
+                <!-- 结果展示区域（提交后由服务器返回内容填充） -->
+                <div class="result-area" id="result">
+                    <!-- 这里将显示查询结果 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 复用首页侧边栏，保持布局一致 -->
+        <aside>
+            <img src="../img/smile.gif" alt="笑" style="width:100%">
+            <img src="../img/scream.gif" alt="尖叫" style="width:100%">
+            <img src="../img/turning.gif" alt="旋转" style="width:100%">
+        </aside>
+    </main>
+
+    <!-- 复用首页底部信息 -->
+    <footer>
+        <small>Copyright © 2025 srk's blog</small><br>
+        <small>联系管理员：StarlitSupper@gmail.com</small>
+    </footer>    
+</body>
+</html>

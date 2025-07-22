@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红黑树</title>
+    <link rel="icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <header>
+        <img src="../img/stone.png" alt="srk" width="50">
+        <span>srk's blog</span>
+        <nav>
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="pages/search.html">搜索</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="article-container">
+            <h1>红黑树</h1>
+            <p class="time">发布时间：2025-07-22</p>
+            <hr>
+            <h2>一、红黑树的概念与规则</h2>
+            <p>红黑树是一种更加特殊的平衡二叉搜索树，它在每个节点上增加一个存储位来表示 节点的颜色（红色或黑色） ，并通过几条规则确保树在插入和删除操作后仍然保持平衡。</p>
+            <p>红黑树有以下四条规则：</p>
+            <ol>
+            	<li><strong>每个结点不是红色就是黑色</strong></li>
+            	<li><strong>根结点是黑色的</strong></li>
+            	<li><strong>如果一个结点是红色的，则它的两个孩子必须都是黑色的，也就是说任意一条路径上不会出现连续的红色结点（黑色结点的孩子颜色不做要求）</strong></li>
+            	<li><strong>对于任意一个结点，从结点到这棵树所有空结点的简单路径上，均包含相同数量的黑色结点</strong></li>
+            </ol>
+            <img src="../img/tree.jpeg" alt="一颗红黑树">
+            <p>依靠它的几条规则，<strong>从同一结点出发红黑树没有一条路径会比其他路径长出2倍</strong>，因而也是接近平衡的。这是因为，由于从根到空结点的每条路径都有相同数量的黑色结点，所以极限场景下，理论最短路径就是全是黑色结点的路径（设长度为bh），理论最长路径是一黑一红间隔组成，长度就是2bh了。也就是说，红黑树中任意一条从根到空结点的路径x，都有bh <= x <= 2bh，确保了红黑树最长路径不超过最短路径的2倍了。</p>
+            <p>这些规则保证了红黑树的平衡性，使得树的高度保持在logN级别。相比于AVL树，红黑树的平衡结构可以说更加“松散”，AVL树严格要求了左右子树高度差不超过1，但红黑树只要路径长不超过2倍就行，但它们的效率还是相同的水平。</p>
+            <hr>
+            <h2>二、红黑树的实现</h2>
+            <p>红黑树的基本结构，不需要AVL树的平衡因子，而需要一个颜色成员:</p>
+            <code>
+            	<pre>enum Color
+{
+	RED,
+	BLACK
+};
+
+template<class K, class V>
+struct RBTreeNode
+{
+	pair<K, V> _kv;
+	RBTreeNode<K, V>* _left;
+	RBTreeNode<K, V>* _right;
+	RBTreeNode<K, V>* _parent;
+	Color _col;
+
+	RBTreeNode(const pair<K,V>& kv)
+		:_kv(kv)
+		, _left(nullptr)
+		, _right(nullptr)
+		, _parent(nullptr)
+		, _col(RED)
+	{ }
+};
+
+template<class K,class V>
+class RBTree
+{
+	typedef RBTreeNode<K, V> Node;
+public:
+
+private:
+	Node* _root;
+};
+</pre>
+            </code>
+            <p>红黑树的插入新结点的过程是这样的：</p>
+            <ol>
+            	<li>首先按照二叉搜索树的规则找到应插入的位置，插入后我们需要判断是否符合红黑树的规则。</li>
+            	<li><strong>如果是空树插入，新增结点必须是黑色的，插入完成；如果是非空树插入，新增结点必须是红色的</strong>，因为如果非空树插入了黑色结点就会破坏规则4，这条规则是很难维护的。</li>
+            	<li>非空树插入红色结点后，如果父亲是黑色的，则不会破坏任何规则，插入完成。</li>
+            	<li>非空树插入红色结点后，如果父亲是红色的，就破坏了规则“红色结点的孩子必须是黑色”，此时需要下面进一步分析。</li>
+            </ol>
+            <p>具体分析最后一条情况，又有几种场景。下面称新增结点为c，c的父亲为p，p的父亲为g，p的兄弟为u。<strong>c是红色的，p也是红色的，那么g一定是黑色的</strong>，这三者的颜色是确定的，所以关键是看u的状态。</p>
+        </div>
+
+        <aside>
+            <img src="../img/smile.gif" alt="笑">
+            <img src="../img/scream.gif" alt="尖叫">
+            <img src="../img/turning.gif" alt="旋转">
+        </aside>
+    </main>
+
+    <footer>
+        <small>Copyright © 2025 srk's blog</small><br>
+        <small>联系管理员：StarlitSupper@gmail.com</small>
+    </footer>
+</body>
+</html>
